@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bitcoin Investment Dashboard</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e8edf2; margin:0; padding:0; }
+    header { background: #1b1f38; color: #fff; padding: 20px; text-align:center; }
+    .container { max-width: 900px; margin: 20px auto; padding:0 20px; }
+    .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius:12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .card h2 { margin-top:0; color:#333; }
+    .balance { font-size:1.5rem; color:#2c3e50; margin-bottom:10px; }
+    table { width:100%; border-collapse: collapse; margin-top:10px; }
+    th, td { text-align:left; padding:12px; border-bottom:1px solid #ddd; }
+    th { background:#f5f5f5; }
+    button { padding:12px 25px; border:none; border-radius:8px; cursor:pointer; font-size:1rem; margin-right:10px; transition:0.2s; }
+    button:hover { opacity:0.9; }
+    .deposit-btn { background:#27ae60; color:#fff; }
+    .withdraw-btn { background:#c0392b; color:#fff; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Welcome, Mr Philip</h1>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <div class="balance">Investment Balance: $50,000</div>
+    <p>Username: Mrphilip40</p>
+  </div>
+
+  <div class="card">
+    <h2>Crypto Prices</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Cryptocurrency</th>
+          <th>Price (USD)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Bitcoin (BTC)</td><td id="btcPrice">Loading...</td></tr>
+        <tr><td>Ethereum (ETH)</td><td id="ethPrice">Loading...</td></tr>
+        <tr><td>Litecoin (LTC)</td><td id="ltcPrice">Loading...</td></tr>
+        <tr><td>Ripple (XRP)</td><td id="xrpPrice">Loading...</td></tr>
+        <tr><td>Dogecoin (DOGE)</td><td id="dogePrice">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <button class="deposit-btn" onclick="deposit()">Deposit</button>
+    <button class="withdraw-btn" onclick="withdraw()">Withdraw</button>
+  </div>
+
+</div>
+
+<script>
+  // Fetch live crypto prices from CoinGecko
+  fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin,ripple,dogecoin&vs_currencies=usd')
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('btcPrice').innerText = '$' + data.bitcoin.usd;
+      document.getElementById('ethPrice').innerText = '$' + data.ethereum.usd;
+      document.getElementById('ltcPrice').innerText = '$' + data.litecoin.usd;
+      document.getElementById('xrpPrice').innerText = '$' + data.ripple.usd;
+      document.getElementById('dogePrice').innerText = '$' + data.dogecoin.usd;
+    });
+
+  function deposit() { 
+    alert("Contact your advisor for more info."); 
+  }
+
+  function withdraw() {
+    const correctKey = "221212";
+    let key = prompt("Enter your withdrawal key:");
+    if(key === correctKey) {
+      let amount = prompt("Enter amount to withdraw:");
+      if(amount && !isNaN(amount)) {
+        let cashapp = prompt("Enter your CashApp tag:");
+        if(cashapp) { 
+          alert(`$${amount} will be deposited to ${cashapp} in about an hour.`); 
+        } else { 
+          alert("Withdrawal cancelled: No CashApp tag entered."); 
+        }
+      } else { 
+        alert("Invalid amount. Withdrawal cancelled."); 
+      }
+    } else { 
+      alert("Incorrect key. Withdrawal cancelled."); 
+    }
+  }
+</script>
+
+</body>
+</html>
